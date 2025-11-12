@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Tường Tri Ân - 11A1</title>
+    
+<style>
+    /* CSS Đã Tối Ưu và Hoàn Chỉnh */
+    
+    /* 1. THANH CÔNG CỤ CỐ ĐỊNH (MÀU TRẮNG, GIỚI HẠN CONTAINER) */
+    .sticky-navbar {
+        position: fixed; 
+        top: 0; 
+        left: 0;
+        right: 0; 
+        max-width: 900px; 
+        margin: 0 auto; 
+        background-color: #fff; 
+        color: #1d3557; 
+        padding: 10px 0;
+        text-align: center;
+        font-size: 1.1em;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 999; 
+        font-family: 'Times New Roman', Times, serif; 
+        border-bottom: 2px solid #a8dadc; 
+        transition: opacity 0.3s, visibility 0.3s, transform 0.3s; 
+    }
+    
+    /* MẶC ĐỊNH ẨN THANH NÀY */
+    .sticky-navbar.hidden {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-100%); 
+    }
+    
+    /* 2. BODY VÀ NỀN */
+    body {
+        font-family: 'Times New Roman', Times, serif; 
+        background-color: #f7f7e8; 
+        color: #333; 
+        margin: 0;
+        padding: 70px 20px 20px 20px; 
+        text-align: center;
+        position: relative; 
+        z-index: 1; 
+    }
+
+    body::before {
+        content: "";
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('background_mo.png'); 
+        background-size: cover; 
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.2; 
+        filter: blur(2px); 
+        z-index: -1; 
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background-color: #fff; 
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        z-index: 2; 
+        position: relative; 
+    }
+
+    /* 3. HIỆU ỨNG ẨN/HIỆN NỘI DUNG */
+    /* ĐÃ THÊM .image-below-quote VÀ .section-title-img */
+    header, .slideshow-container, .image-carousel-container, .thumbnail-nav-container, .section, .image-content-section, .image-below-quote, .section-title-img { 
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        font-family: 'Times New Roman', Times, serif; 
+    }
+
+    header.revealed, .slideshow-container.revealed, .image-carousel-container.revealed, .thumbnail-nav-container.revealed, .section.revealed, .image-content-section.revealed, .image-below-quote.revealed, .section-title-img.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .image-carousel-container.faded, .thumbnail-nav-container.faded, .section.faded, .image-content-section.faded, .image-below-quote.faded, .section-title-img.faded {
+        opacity: 0.5;
+        transform: translateY(0);
+    }
+    
+    header.faded {
+        opacity: 0.8; 
+        transform: translateY(0);
+    }
+    
+    /* FIX LỖI HIỂN THỊ "MẢNG ĐEN" TRONG NỘI DUNG TAB */
+    .content-wrapper {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        transition: none !important;
+        font-family: 'Times New Roman', Times, serif; 
+    }
+    
+    .content-wrapper.faded {
+        opacity: 1 !important; 
+    }
+
+    .content-wrapper.revealed {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+    /* KẾT THÚC FIX LỖI HIỂN THỊ */
+
+    /* 4. KHUNG NỀN (CHỈ DÀNH CHO PHẦN LỜI NGỎ VÀ QUOTE) */
+    .section {
+        margin-top: 0; 
+        margin-bottom: 25px;
+        padding: 15px; 
+        border-left: 5px solid #f0f8ff; 
+        background-color: #f0f8ff; 
+        border-radius: 5px;
+        opacity: 1; 
+    }
+    
+    /* NEW: Xóa khung cho Phần 2 và 3 */
+    .image-content-section {
+        padding: 0 15px 15px 15px !important; 
+        border-left: none !important; 
+        background-color: transparent !important; 
+        box-shadow: none !important; 
+        margin-top: 20px; 
+        margin-bottom: 40px;
+        opacity: 1; 
+        transform: translateY(0);
+        transition: none;
+    }
+    
+    .double-column-container {
+        margin-bottom: 25px; 
+        padding: 0; 
+        border-left: none; 
+        background-color: transparent; 
+        border-radius: 0; 
+        box-shadow: none;
+        opacity: 1; 
+    }
+    
+    /* CSS cho ảnh tiêu đề - TÁCH RỜI KHUNG XANH */
+    .section-title-img {
+        display: block; 
+        max-width: 80%; 
+        height: auto;
+        margin: 40px auto 10px auto; 
+        background-color: transparent; 
+        padding: 0; 
+        border-radius: 0; 
+        box-shadow: none; 
+    }
+
+    /* Kích thước đặc biệt cho ảnh tiêu đề chính trong welcome-text */
+    .welcome-text .section-title-img {
+        max-width: 90% !important; 
+        margin-top: 0 !important; 
+        margin-bottom: 0 !important; 
+        padding: 0 !important; 
+        box-shadow: none !important; 
+    }
+
+    /* CSS ẢNH Q1.PNG, Q2.PNG VÀ Q3.PNG */
+    .image-below-quote {
+        display: block;
+        max-width: 100%; 
+        height: auto;
+        margin: 30px auto 40px auto; 
+        background-color: transparent; 
+        padding: 0;
+        border-radius: 0;
+        box-shadow: none; 
+    }
+
+    /* CSS cho Tab Navigation (Nút hình chữ nhật) */
+    .tab-buttons {
+        text-align: center;
+        margin: 10px 0 20px 0;
+        border-bottom: none; 
+    }
+    
+    /* Đảm bảo nút ở dưới nội dung có khoảng cách phía trên*/
+    .image-content-section .tab-buttons:last-child {
+        margin-top: 30px; 
+        margin-bottom: 10px;
+    }
+
+    .tab-button {
+        background-color: #f0f8ff; 
+        color: #1d3557; 
+        border: 2px solid #a8dadc; 
+        padding: 8px 18px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: bold;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        border-radius: 3px; /* Đã thay đổi thành hình chữ nhật */
+        margin: 0 5px; 
+        position: static; 
+        top: auto;
+        display: inline-block;
+    }
+
+    .tab-button:hover:not(.active) {
+        background-color: #d7eeed;
+    }
+
+    .tab-button.active {
+        background-color: #4682b4; 
+        color: #fff; 
+        border-color: #4682b4; 
+        border-bottom: 2px solid #4682b4; 
+        z-index: 10;
+        top: auto;
+    }
+
+    .tab-content {
+        display: none; 
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .tab-content.active {
+        display: block; 
+    }
+    
+    /* CSS cho ảnh nội dung */
+    .tab-content img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+        border: 1px solid #ddd; 
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Thêm class này để ẩn nội dung không được chọn ban đầu */
+    .hidden-content { 
+        opacity: 0;
+        display: none;
+    }
+
+    /* --- PHẦN HEADER VÀ NỘI DUNG CHÍNH --- */
+    header {
+        position: relative; 
+        background-color: transparent; 
+        color: #333; 
+        padding: 10px 0 20px 0; 
+        margin: 0; 
+        border-radius: 0; 
+        border-bottom: none; 
+        text-align: center; 
+    }
+
+    .header-content-top {
+        display: flex; 
+        justify-content: space-between; 
+        align-items: flex-start; 
+        margin-bottom: 10px;
+        padding: 0 30px; 
+    }
+
+    .header-images-left {
+        display: flex; 
+        gap: 5px; 
+        align-items: center;
+    }
+
+    .corner-img {
+        width: 50px; 
+        height: 50px;
+        object-fit: contain; 
+        border-radius: 0; 
+        margin-bottom: 0; 
+        border: none; 
+        box-shadow: none; 
+    }
+    
+    .header-text-right {
+        font-weight: bold;
+        font-size: 0.9em;
+        text-align: right;
+    }
+
+    .school-name {
+        font-size: 1.2em; 
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    .chi-doan {
+        font-size: 1em;
+        margin-bottom: 15px;
+    }
+
+    .welcome-text {
+        font-style: italic;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+
+    .baotuong-logo {
+        max-width: 70%; 
+        height: auto; 
+        margin: 20px auto 30px auto; 
+        display: block; 
+    }
+    
+    /* CSS SLIDESHOW ĐẦU TRANG */
+    .slideshow-container {
+        max-width: 800px; 
+        position: relative;
+        margin: 20px auto; 
+        border-radius: 8px;
+        overflow: hidden; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+    }
+
+    .mySlides {
+        display: none; 
+    }
+
+    .mySlides img {
+        vertical-align: middle;
+        width: 100%;
+        height: 350px; 
+        object-fit: cover; 
+    }
+
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    @keyframes fade {
+        from {opacity: .4} 
+        to {opacity: 1}
+    }
+
+    /* CSS DOTS */
+    .dot {
+        cursor: pointer;
+        height: 12px;
+        width: 12px;
+        margin: 0 4px;
+        background-color: #bbb; 
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+    .active, .dot:hover {
+        background-color: #717171; 
+    }
+
+    /* CSS NỘI DUNG CHUYÊN MỤC */
+    h2 { 
+        color: #4682b4; 
+        border-bottom: 2px dashed #a3b1c2; 
+        padding-bottom: 5px;
+        text-align: center; 
+    }
+    
+    h3 { 
+        color: #457b9d; 
+        text-align: center; 
+    }
+
+    .double-column-container h3 {
+         color: #457b9d; 
+         text-align: center; 
+         margin-top: 15px; 
+    }
+
+    .double-column {
+        display: flex; 
+        gap: 20px; 
+        padding: 10px 0;
+    }
+
+    .col-left, .col-right {
+        flex: 1; 
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        border: 1px solid #a8dadc; 
+    }
+
+    .col-left {
+        background-color: #eaf4f4; 
+    }
+
+    .col-right {
+        background-color: #d7eeed; 
+    }
+
+    p {
+        line-height: 1.6;
+        margin-bottom: 1em;
+    }
+    
+    .quote {
+        font-style: italic;
+        border-left: 3px solid #4682b4; 
+        padding-left: 15px;
+        margin: 20px 0;
+        color: #525252;
+        text-align: left; 
+    }
+
+    /* CSS cho CAROUSEL 14 ẢNH */
+    .image-carousel-container {
+        max-width: 800px;
+        margin: 40px auto 20px auto; 
+        position: relative;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Next & previous buttons */
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        background-color: rgba(0,0,0,0.5); 
+        z-index: 50; 
+        text-decoration: none; 
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    /* On hover, add a black background with a little more opacity */
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+
+    .image-carousel {
+        width: 100%;
+        height: 450px; 
+        position: relative;
+    }
+
+    .carousel-slide {
+        display: none;
+        width: 100%;
+        height: 100%;
+        cursor: zoom-in; /* Thêm con trỏ zoom */
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+    }
+
+    .fade-carousel {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    /* CSS cho THANH THUMBNAIL (SLIDE CHỜ THUYẾT TRÌNH) */
+    .thumbnail-nav-container {
+        max-width: 800px;
+        margin: 0 auto 50px auto;
+    }
+
+    .thumbnail-nav {
+        display: flex;
+        flex-direction: column; 
+        gap: 10px;
+        padding: 0 5px;
+    }
+
+    .thumbnail-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+    
+    .thumbnail-item {
+        cursor: pointer;
+        /* Tính toán cho 7 item/hàng: (100% - 6 * 8px) / 7 */
+        width: calc((100% - 48px) / 7); 
+        height: 70px; 
+        border: 3px solid transparent;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+    }
+
+    .thumbnail-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumbnail-item.active-thumb {
+        border-color: #4682b4; 
+        box-shadow: 0 0 10px rgba(70, 130, 180, 0.5);
+    }
+
+    .thumbnail-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.5; 
+        transition: opacity 0.3s;
+    }
+
+    .thumbnail-item.active-thumb img {
+        opacity: 1; 
+    }
+
+    .slide-number {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background-color: #1d3557; 
+        color: white;
+        padding: 2px 5px;
+        font-size: 0.7em;
+        border-radius: 3px;
+        font-weight: bold;
+        z-index: 10;
+    }
+
+    /* FOOTER LUÔN HIỂN THỊ */
+    .footer {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
+        font-size: 0.9em;
+        color: #666;
+    }
+    
+    /* 5. NÚT CUỘN LÊN ĐẦU TRANG */
+    .back-to-top {
+        position: fixed; 
+        bottom: 30px; 
+        right: 30px; 
+        background-color: #4682b4; 
+        color: #fff;
+        border: none;
+        border-radius: 50%; 
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+        line-height: 45px;
+        text-align: center;
+        cursor: pointer;
+        opacity: 0; 
+        visibility: hidden; 
+        transition: opacity 0.3s, visibility 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000; 
+    }
+
+    .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* --- MODAL (LIGHTBOX) STYLES --- */
+    .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 10000; 
+        padding-top: 50px; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0); 
+        background-color: rgba(0,0,0,0.9); 
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 90%;
+        max-width: 900px; 
+        max-height: 90%; 
+        object-fit: contain; 
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .close-modal:hover,
+    .close-modal:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    @-webkit-keyframes zoom {
+        from {-webkit-transform:scale(0)} 
+        to {-webkit-transform:scale(1)}
+    }
+
+    @keyframes zoom {
+        from {transform:scale(0)} 
+        to {transform:scale(1)}
+    }
+
+    .modal-content {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+/* ======================================= */
+/* ====== MOBILE OPTIMIZATION (CSS) ====== */
+/* ======================================= */
+@media screen and (max-width: 600px) {
+    
+    /* 1. LAYOUT CHUNG */
+    body {
+        /* Giảm padding body để tận dụng không gian */
+        padding: 50px 5px 10px 5px; 
+    }
+    
+    .container {
+        /* Giảm padding container */
+        padding: 15px 10px;
+    }
+    
+    /* 2. HEADER */
+    .header-content-top {
+        /* Giảm padding hai bên */
+        padding: 0 10px; 
+    }
+    
+    .corner-img {
+        /* Giảm kích thước logo góc */
+        width: 35px; 
+        height: 35px;
+    }
+    
+    .school-name {
+        /* Giảm cỡ chữ tiêu đề chính */
+        font-size: 1.1em; 
+    }
+
+    .welcome-text {
+        font-size: 1.2em;
+    }
+    
+    .baotuong-logo {
+        /* Đảm bảo logo báo tường không quá lớn */
+        max-width: 90%; 
+    }
+    
+    /* 3. SLIDESHOW VÀ CAROUSEL */
+    .slideshow-container {
+        /* Giảm kích thước slideshow */
+        margin: 10px auto 15px auto;
+    }
+    
+    .mySlides img {
+        /* Giảm chiều cao slideshow */
+        height: 200px; 
+    }
+    
+    .image-carousel-container {
+        /* Giảm chiều cao carousel ảnh */
+        margin: 20px auto; 
+    }
+    
+    .image-carousel {
+        height: 300px;
+    }
+
+    .prev, .next {
+        /* Giảm kích thước nút chuyển slide */
+        font-size: 20px;
+        padding: 10px;
+    }
+    
+    /* 4. NỘI DUNG VÀ CỘT */
+    .double-column {
+        /* Chuyển từ 2 cột ngang sang xếp dọc */
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .col-left, .col-right {
+        /* Cột chiếm toàn bộ chiều rộng */
+        flex: none; 
+        padding: 15px;
+    }
+    
+    .section-title-img {
+        /* Đảm bảo ảnh tiêu đề không chiếm quá nhiều khoảng trắng */
+        margin: 20px auto 5px auto;
+        max-width: 95%;
+    }
+    
+    .quote {
+        /* Giảm padding quote */
+        padding-left: 10px;
+    }
+    
+    /* 5. NÚT TAB (QUAN TRỌNG) */
+    .tab-buttons {
+        /* Cho phép nút tab wrap */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    
+    .tab-button {
+        /* Nút rộng hơn và có khoảng cách */
+        margin: 5px;
+        padding: 8px 10px;
+        font-size: 0.9em;
+        flex-grow: 1; /* Cho phép nút giãn ra */
+        min-width: 45%; /* Đảm bảo mỗi dòng có 2 nút */
+    }
+
+    /* 6. THANH THUMBNAIL (14 ẢNH) */
+    .thumbnail-nav {
+        /* Cho phép nhóm thumbnail wrap nếu cần */
+        gap: 5px;
+    }
+    
+    .thumbnail-group {
+        /* Đảm bảo 2 nhóm xếp chồng lên nhau */
+        justify-content: space-around; 
+        gap: 5px;
+    }
+    
+    .thumbnail-item {
+        /* Chỉ hiển thị 4 ảnh/hàng */
+        width: calc((100% - 15px) / 4); /* (100% - 3*5px)/4 */
+        height: 50px; 
+        margin: 0;
+    }
+
+}
+/* ======================================= */
+/* ====== END MOBILE OPTIMIZATION ====== */
+/* ======================================= */
+</style>
+
+</head>
+<body>
+    <div class="sticky-navbar hidden" id="stickyNav">
+        HÀNH TRÌNH GIEO CHỮ - Mái hiên tri thức
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-content-top">
+                <div class="header-images-left">
+                    <img src="logotron.png" alt="Logo Trường" class="corner-img"> 
+                    <img src="logodoan.png" alt="Logo Đoàn" class="corner-img">
+                    <img src="logokiniem.jpg" alt="Kỷ niệm 65 năm" class="corner-img">
+                </div>
+                <div class="header-text-right">
+                    ĐOÀN TNCS HỒ CHÍ MINH 
+                </div>
+            </div>
+
+            <h2 class="school-name">BCH ĐOÀN TRƯỜNG THPT TRẦN PHÚ-HOÀN KIẾM</h2>
+            <div class="chi-doan">Chi Đoàn 11A1</div>
+
+            <div class="welcome-text" style="text-align: center; font-size: 1.5em; font-weight: bold; margin-bottom: 30px; font-style: normal; line-height: 1.4; color: #4682b4;">
+                Nhiệt liệt chào mừng 43 năm ngày Nhà giáo Việt Nam 20-11
+                <br>và 65 năm ngày thành lập trường
+            </div>
+            <img src="tieude_baotuong.jpg" alt="Tên Cuốn Báo" class="baotuong-logo">
+        </header>
+
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <img src="slide1.jpg" style="width:100%" alt="Slide 1">
+            </div>
+            <div class="mySlides fade">
+                <img src="slide2.jpg" style="width:100%" alt="Slide 2">
+            </div>
+            <div class="mySlides fade">
+                <img src="slide3.jpg" style="width:100%" alt="Slide 3">
+            </div>
+        </div>
+        
+        <div style="text-align:center; margin-top: 10px;">
+            <span class="dot" onclick="currentSlide(1)"></span> 
+            <span class="dot" onclick="currentSlide(2)"></span> 
+            <span class="dot" onclick="currentSlide(3)"></span> 
+        </div>
+
+        <div class="section double-column-container">
+            <div class="content-wrapper"> 
+                <img src="loingo.png" alt="Lời Ngỏ" class="section-title-img">
+                <div class="double-column">
+                    <div class="col-left">
+                        <h3>Tâm Thư Tri Ân</h3>
+                        <p>
+                            Tháng Mười Một về, mang theo những cơn gió se lạnh và sắc vàng rực rỡ của những kỷ niệm. Hòa chung không khí hân hoan của cả nước hướng về Ngày Nhà giáo Việt Nam 20/11, tập thể lớp **11A1-K64** chúng em xin trân trọng giới thiệu số báo tường đặc biệt **"Hành Trình Gieo Chữ"**.
+                        </p>
+                        <p style="text-align: right; font-style: italic; font-weight: bold;">Tập thể lớp 11A1 kính tặng</p>
+                    </div>
+                    
+                    <div class="col-right">
+                        <h3>Lời Hứa Học Trò</h3>
+                        <p>
+                            Đây không chỉ là một tờ báo, mà là một bức thư tay điện tử chứa đựng tất cả sự kính trọng, lòng biết ơn sâu sắc và những ký ức tuổi học trò trong veo mà thầy cô đã ban tặng. Chúng em xin hứa sẽ luôn cố gắng học tập, rèn luyện để xứng đáng với công lao dạy dỗ của thầy cô.
+                        </p>
+                        <p>
+                            Xin kính chúc quý thầy cô luôn mạnh khỏe, hạnh phúc và tiếp tục là "người ươm mầm" cho bao thế hệ tương lai.
+                        </p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <img src="trangtho.png" alt="Trang Thơ" class="section-title-img">
+        <div class="image-content-section" id="trangThoSection">
+            <div class="tab-buttons" id="thoButtonsTop">
+                <button class="tab-button active" onclick="openTab('trangThoSection', 'tho1')">Trường Trần Phú</button>
+                <button class="tab-button" onclick="openTab('trangThoSection', 'tho2')">Ngày Nhà Giáo</button>
+                <button class="tab-button" onclick="openTab('trangThoSection', 'tho3')">Cô Giáo Em</button>
+                <button class="tab-button" onclick="openTab('trangThoSection', 'tho4')">Phút Ra Chơi</button>
+            </div>
+            
+            <div id="tho1" class="tab-content content-wrapper active">
+                <img src="truongtranphu.jpg" alt="Trang Thơ Bài 1">
+            </div>
+            
+            <div id="tho2" class="tab-content content-wrapper hidden-content">
+                <img src="ngaynhagiao.jpg" alt="Trang Thơ Bài 2">
+            </div>
+            
+            <div id="tho3" class="tab-content content-wrapper hidden-content">
+                <img src="cogiaoem.jpg" alt="Trang Thơ Bài 3">
+            </div>
+            
+            <div id="tho4" class="tab-content content-wrapper hidden-content">
+                <img src="phutrachoi.jpg" alt="Trang Thơ Bài 4">
+            </div>
+            
+            <div class="tab-buttons" id="thoButtonsBottom">
+                <button class="tab-button active" onclick="openTab('trangThoSection', 'tho1')">Trường Trần Phú</button>
+                <button class="tab-button" onclick="openTab('trangThoSection', 'tho2')">Ngày Nhà Giáo</button>
+                <button class="tab-button" onclick="openTab('trangThoSection', 'tho3')">Cô Giáo Em</button>
+                <button class="tab-button" onclick="openTab('trangThoSection', 'tho4')">Phút Ra Chơi</button>
+            </div>
+        </div>
+
+        <img src="tranphutrongtoi.png" alt="Trần Phú Trong Tôi" class="section-title-img">
+        <div class="image-content-section" id="tranPhuSection">
+            <div class="tab-buttons" id="tranPhuButtonsTop">
+                <button class="tab-button active" onclick="openTab('tranPhuSection', 'bai1')">Rực Rỡ Vượt Thời Gian</button>
+                <button class="tab-button" onclick="openTab('tranPhuSection', 'bai2')">Giữa Trung Tâm Thủ Đô</button>
+                <button class="tab-button" onclick="openTab('tranPhuSection', 'bai3')">Những người lái đò thầm lặng</button>
+            </div>
+            
+            <div id="bai1" class="tab-content content-wrapper active">
+                <img src="rucrovuotthoigian.png" alt="Trần Phú Trong Tôi Bài 1">
+            </div>
+            
+            <div id="bai2" class="tab-content content-wrapper hidden-content">
+                <img src="giuatrungtamthudo.png" alt="Trần Phú Trong Tôi Bài 2">
+            </div>
+            
+            <div id="bai3" class="tab-content content-wrapper hidden-content">
+                <img src="nhungnguoilaidothamlang.png" alt="Trần Phú Trong Tôi Bài 3">
+            </div>
+            
+            <div class="tab-buttons" id="tranPhuButtonsBottom">
+                <button class="tab-button active" onclick="openTab('tranPhuSection', 'bai1')">Rực Rỡ Vượt Thời Gian</button>
+                <button class="tab-button" onclick="openTab('tranPhuSection', 'bai2')">Giữa Trung Tâm Thủ Đô</button>
+                <button class="tab-button" onclick="openTab('tranPhuSection', 'bai3')">Những người lái đò thầm lặng</button>
+            </div>
+        </div>
+
+        <img src="vinha.png" alt="Tiêu đề chuyên mục mới" class="section-title-img">
+        
+        <img src="q3.png" alt="Ảnh trang trí Vị Nhà" class="image-below-quote"> 
+        
+        <div class="section"> 
+            <div class="content-wrapper">
+                <div class="quote">
+                    "Tôi có những người bạn chân thành – những người đồng hành cùng tôi qua từng kỳ thi, từng tiết kiểm tra, từng buổi lao động hay những ngày tham gia hoạt động truyền thống của trường. Chúng tôi đã cùng nhau tạo nên những kỷ niệm tuổi học trò đẹp nhất, trong hành lang, sân trường, dưới những tán phượng rực đỏ mỗi mùa hè."
+                    <p style="text-align: right; font-weight: bold; margin-top: 5px;">— Lê Minh Nghĩa - 11A1</p>
+                </div>
+            </div>
+        </div>
+        
+        <img src="vn1.png" alt="Vị Nhà Ảnh 1" class="image-below-quote"> 
+        <img src="vn2.png" alt="Vị Nhà Ảnh 2" class="image-below-quote">
+        
+        <img src="vn3.png" alt="Vị Nhà Ảnh 3" class="image-below-quote"> 
+        
+        <div class="section"> 
+            <div class="content-wrapper">
+                <div class="quote">
+                    "Có học sinh Trần Phú nào không biết bác Luyến, bác Hải không cơ chứ?
+
+Có những người thể không nhớ tên, những không thể không nhớ mặt"
+                  
+                </div>
+            </div>
+        </div>
+        
+        <img src="vn4.png" alt="Vị Nhà Bài 4" class="image-below-quote">
+        
+        <img src="vn5.png" alt="Vị Nhà Ảnh 5" class="image-below-quote"> <img src="nguoigieochu.png" alt="Người Gieo Chữ" class="section-title-img">
+        <div class="section"> 
+            <div class="content-wrapper">
+                <div class="quote">
+                    "Một người thầy trung bình chỉ biết nói. Một người thầy giỏi biết giải thích. Một người thầy xuất chúng biết minh họa. Một người thầy vĩ đại biết cách truyền cảm hứng."
+                    <p style="text-align: right; font-weight: bold; margin-top: 5px;">— William Arthur Ward</p>
+                </div>
+            </div>
+        </div>
+
+        
+        <img src="q1.png" alt="Ảnh trang trí giữa" class="image-below-quote">
+        
+        <div class="image-carousel-container">
+            <a class="prev" onclick="plusCarouselSlides(-1)">&#10094;</a> 
+            
+            <div class="image-carousel" id="imageCarousel">
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_1.jpg" alt="Slide 1"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_2.jpg" alt="Slide 2"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_3.jpg" alt="Slide 3"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_4.png" alt="Slide 4"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_5.jpg" alt="Slide 5"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_6.jpg" alt="Slide 6"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_7.jpg" alt="Slide 7"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_8.jpg" alt="Slide 8"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_9.jpg" alt="Slide 9"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_10.jpg" alt="Slide 10"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_11.jpg" alt="Slide 11"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_12.png" alt="Slide 12"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_13.jpg" alt="Slide 13"></div>
+                <div class="carousel-slide fade-carousel" onclick="openModal(this)"><img src="slide_14.jpg" alt="Slide 14"></div> 
+            </div>
+            
+            <a class="next" onclick="plusCarouselSlides(1)">&#10095;</a>
+        </div>
+
+        <div class="thumbnail-nav-container">
+            <div class="thumbnail-nav" id="thumbnailNav">
+                <div class="thumbnail-group">
+                    <div class="thumbnail-item active-thumb" onclick="currentCarouselSlide(1)">
+                        <span class="slide-number">1</span>
+                        <img src="slide_1.jpg" alt="Slide 1 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(2)">
+                        <span class="slide-number">2</span>
+                        <img src="slide_2.jpg" alt="Slide 2 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(3)">
+                        <span class="slide-number">3</span>
+                        <img src="slide_3.jpg" alt="Slide 3 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(4)">
+                        <span class="slide-number">4</span>
+                        <img src="slide_4.png" alt="Slide 4 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(5)">
+                        <span class="slide-number">5</span>
+                        <img src="slide_5.jpg" alt="Slide 5 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(6)">
+                        <span class="slide-number">6</span>
+                        <img src="slide_6.jpg" alt="Slide 6 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(7)">
+                        <span class="slide-number">7</span>
+                        <img src="slide_7.jpg" alt="Slide 7 Thumbnail">
+                    </div>
+                </div>
+                <div class="thumbnail-group">
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(8)">
+                        <span class="slide-number">8</span>
+                        <img src="slide_8.jpg" alt="Slide 8 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(9)">
+                        <span class="slide-number">9</span>
+                        <img src="slide_9.jpg" alt="Slide 9 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(10)">
+                        <span class="slide-number">10</span>
+                        <img src="slide_10.jpg" alt="Slide 10 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(11)">
+                        <span class="slide-number">11</span>
+                        <img src="slide_11.jpg" alt="Slide 11 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(12)">
+                        <span class="slide-number">12</span>
+                        <img src="slide_12.png" alt="Slide 12 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(13)">
+                        <span class="slide-number">13</span>
+                        <img src="slide_13.jpg" alt="Slide 13 Thumbnail">
+                    </div>
+                    <div class="thumbnail-item" onclick="currentCarouselSlide(14)">
+                        <span class="slide-number">14</span>
+                        <img src="slide_14.jpg" alt="Slide 14 Thumbnail">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section"> 
+            <div class="content-wrapper">
+                <div class="quote">
+                    <p>
+                    Mỗi năm, đến ngày 20 tháng 11, trong lòng em lại dâng lên một cảm xúc khó tả. Đó là dịp để chúng em bày tỏ lòng biết ơn sâu sắc đến những người thầy, người cô đã tận tâm dạy dỗ. Trong suốt những năm học vừa qua, người mà em luôn nhớ và kính trọng nhất chính là cô Hoa – cô giáo chủ nhiệm dạy môn Sinh, người đã dành trọn tình thương và sự kiên nhẫn cho chúng em.
+                    </p>
+                    <p>
+ Giọng cô nhẹ nhàng, ấm áp, mỗi khi cô giảng bài, cả lớp đều chăm chú lắng nghe. Cô luôn hiền hòa, gần gũi và yêu quý học sinh như con của mình. Cách cô truyền đạt kiến thức súc tích, dễ hiểu khiến chúng em càng thêm yêu thích môn Sinh. Sau mỗi kỳ thi, dù kết quả có tốt hay chưa được như mong muốn, cô Hoa chưa bao giờ trách mắng. Ngược lại, cô luôn nhẹ nhàng động viên, khích lệ để chúng em cố gắng hơn ở những lần sau. Chính sự quan tâm và lời nói dịu dàng ấy đã giúp em có thêm niềm tin và động lực để học tập mỗi ngày
+                   </p>
+                   <p>
+ Nhân ngày Nhà giáo Việt Nam 20/11, em muốn gửi tới cô Hoa lời cảm ơn chân thành nhất. Em sẽ cố gắng học thật tốt, luôn ngoan ngoãn và chăm chỉ, để không phụ lòng yêu thương và sự dạy dỗ tận tâm của cô.
+                   <p/>
+                    <p style="text-align: right; font-weight: bold; margin-top: 5px;">— Học trò của cô</p>
+                </div>
+            </div>
+        </div>
+        <img src="q2.png" alt="Ảnh trang trí dưới carousel" class="image-below-quote">
+        
+        <img src="ngc_1.png" alt="Người Gieo Chữ Ảnh 1" class="image-below-quote">
+        
+        <div class="section"> 
+            <div class="content-wrapper">
+                <div class="quote">
+                    "Người thầy, người cô ấy không đơn thuần là những người truyền đạt kiến thức. Họ là những người thắp sáng những ước mơ."
+                    <p style="text-align: right; font-weight: bold; margin-top: 5px;">— Trần Minh Duy - 11A1</p>
+                </div>
+            </div>
+        </div>
+        
+        <img src="ngc_2.png" alt="Người Gieo Chữ Ảnh 2" class="image-below-quote">
+        
+        <div class="section"> 
+            <div class="content-wrapper">
+                <div class="quote">
+                   <p>
+                    Mỗi khi tháng mười một về, lòng tôi lại rộn ràng nhớ đến thầy cô – những người đã lặng lẽ gieo hạt giống tri thức cho bao thế hệ học trò. Thầy cô không chỉ dạy chúng tôi con chữ, mà còn dạy cách sống, cách làm người. Tôi vẫn nhớ dáng thầy kiên nhẫn giảng từng bài toán khó, nụ cười hiền của cô mỗi khi chúng tôi đạt được điểm tốt
+                   </p>
+                   <p>
+Thời gian trôi đi, tóc thầy cô đã điểm bạc, nhưng tấm lòng vì học trò vẫn vẹn nguyên như thuở nào. Nhờ có thầy cô, chúng tôi mới có hành trang vững chắc để bước vào đời. Ngày Nhà giáo Việt Nam 20/11 là dịp để chúng em gửi lời tri ân sâu sắc nhất đến những người đã âm thầm thắp sáng ước mơ cho bao thế hệ.
+                  </p>
+                  <p>
+Dẫu mai này khôn lớn nên người, chúng con vẫn mãi ghi nhớ: công ơn thầy cô là ngọn lửa sưởi ấm trái tim học trò.
+"                 </p>
+                    <p style="text-align: right; font-weight: bold; margin-top: 5px;">— Nguyễn Diệu Anh-11A1</p>
+                </div>
+            </div>
+        </div>
+        <img src="ngc_3.png" alt="Người Gieo Chữ Ảnh 3" class="image-below-quote">
+        
+        <p style="text-align: center; font-size: 1.1em; color: #000; font-weight: bold; margin-bottom: 20px; margin-top: 30px;">Số báo tường "Hành Trình Gieo Chữ" nhân Ngày Nhà giáo Việt Nam 20/11 xin được khép lại tại đây, nhưng dòng chảy cảm xúc và lòng biết ơn của chúng ta sẽ không bao giờ dừng lại. Dù những trang giấy này đã hết, trang sử hào hùng của ngôi nhà Trần Phú – Hoàn Kiếm vẫn đang được viết tiếp bằng chính tinh thần học tập, rèn luyện và tấm lòng nhiệt huyết của mỗi thầy cô và học sinh hôm nay. Xin kính chúc tất cả quý thầy cô và cán bộ nhân viên nhà trường dồi dào sức khỏe, hạnh phúc, và thành công rực rỡ!</p>
+        
+        <div class="footer">
+            Thiết kế và thực hiện bởi Tập thể Lớp 11A1 - Năm học 2025-2026<br>
+            Kính chúc Quý Thầy Cô những điều tốt đẹp nhất!
+        </div>
+    </div>
+
+    <button id="backToTopBtn" class="back-to-top" onclick="scrollToTop()">
+        ↑
+    </button>
+    
+    <div id="imageModal" class="modal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+<script>
+    // 1. Logic cho SLIDESHOW ĐẦU TRANG
+    let slideIndex = 1; 
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+    }
+    
+    function currentSlide(n) {
+        slideIndex = n;
+        showSlides(slideIndex);
+    }
+    
+    function autoShowSlides() {
+        slideIndex++;
+        if (slideIndex > document.getElementsByClassName("mySlides").length) {slideIndex = 1}    
+        showSlides(slideIndex);
+        setTimeout(autoShowSlides, 6000); 
+    }
+    
+    // Tự động chạy slider đầu trang
+    autoShowSlides();
+    showSlides(slideIndex); 
+    
+    // 2. Logic cho CAROUSEL 14 ẢNH (CHỈ CHUYỂN BẰNG TAY)
+    let carouselIndex = 1;
+
+    function plusCarouselSlides(n) {
+      showCarouselSlides(carouselIndex += n);
+    }
+
+    function showCarouselSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("carousel-slide");
+        let thumbs = document.getElementsByClassName("thumbnail-item");
+        
+        if (n > slides.length) {carouselIndex = 1}
+        if (n < 1) {carouselIndex = slides.length}
+        
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < thumbs.length; i++) {
+            thumbs[i].className = thumbs[i].className.replace(" active-thumb", "");
+        }
+        
+        slides[carouselIndex-1].style.display = "block";
+        thumbs[carouselIndex-1].className += " active-thumb";
+    }
+
+    function currentCarouselSlide(n) {
+        carouselIndex = n;
+        showCarouselSlides(carouselIndex);
+    }
+
+    showCarouselSlides(carouselIndex); // Khởi tạo carousel
+
+    // 3. Logic HIỆN DẦN VÀ MỜ NỘI DUNG
+    // ĐÃ THÊM .image-below-quote và .section-title-img để tạo hiệu ứng ẩn hiện cho ảnh
+    const sections = document.querySelectorAll('header, .slideshow-container, .image-carousel-container, .thumbnail-nav-container, .section, .image-content-section, .image-below-quote, .section-title-img');
+    
+    function checkSections() {
+        const windowHeight = window.innerHeight;
+        
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top; 
+            const sectionBottom = section.getBoundingClientRect().bottom;
+
+            const revealPoint = windowHeight * 0.8; 
+            
+            if (sectionTop < revealPoint && sectionTop > -section.offsetHeight) {
+                section.classList.add('revealed');
+            } else {
+                if (section.tagName !== 'HEADER' && sectionTop > windowHeight) {
+                     section.classList.remove('revealed');
+                }
+            }
+            
+            if (sectionBottom < 50 && section.classList.contains('revealed')) { 
+                section.classList.add('faded');
+            } else {
+                section.classList.remove('faded');
+            }
+            
+            if (section.tagName === 'HEADER' && sectionBottom < 50) {
+                 section.classList.add('faded');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', checkSections);
+    checkSections();
+    
+    // 4. Logic cho NÚT CUỘN LÊN ĐẦU TRANG VÀ THANH CỐ ĐỊNH
+
+    const backToTopButton = document.getElementById("backToTopBtn");
+    const stickyNav = document.getElementById("stickyNav"); 
+    const header = document.querySelector("header"); 
+    const scrollThreshold = 300; 
+    
+    function checkStickyNav() {
+        const headerBottom = header.getBoundingClientRect().bottom;
+        if (headerBottom < 0) {
+            stickyNav.classList.remove('hidden');
+        } else {
+            stickyNav.classList.add('hidden');
+        }
+    }
+    
+    function toggleBackToTopButton() {
+        if (window.scrollY > scrollThreshold) {
+            backToTopButton.classList.add("show");
+        } else {
+            backToTopButton.classList.remove("show");
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth" 
+        });
+    }
+
+    function combinedScrollCheck() {
+        checkSections(); 
+        checkStickyNav(); 
+        toggleBackToTopButton(); 
+    }
+    
+    window.addEventListener('scroll', combinedScrollCheck);
+    combinedScrollCheck(); 
+    
+    // 5. Logic cho Tab Content (Chọn bài viết)
+    
+    function openTab(sectionId, tabId) {
+        let i;
+        const section = document.getElementById(sectionId);
+        const tabContent = section.getElementsByClassName("tab-content");
+        const allButtons = section.querySelectorAll(".tab-button"); 
+
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].classList.remove('active');
+            tabContent[i].classList.remove('revealed'); 
+        }
+
+        allButtons.forEach(button => {
+            button.classList.remove('active');
+        });
+
+        const targetContent = document.getElementById(tabId);
+        if (targetContent) {
+            targetContent.classList.add('active', 'revealed'); 
+            
+            allButtons.forEach(button => {
+                // Kiểm tra xem onclick của nút có chứa tabId này không
+                if (button.getAttribute('onclick').includes(`'${tabId}'`)) {
+                    button.classList.add('active');
+                }
+            });
+            
+            // Cuộn lên đầu nội dung mới
+            targetContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    // 6. Logic cho Modal (Zoom ảnh)
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+
+    function openModal(slideElement) {
+        // Lấy đường dẫn ảnh từ thẻ <img> bên trong slide element
+        const imgSrc = slideElement.querySelector('img').src;
+        modal.style.display = "block";
+        modalImg.src = imgSrc;
+        document.body.style.overflow = 'hidden'; // Ngăn cuộn trang khi modal mở
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+        document.body.style.overflow = 'auto'; // Cho phép cuộn trang lại
+    }
+
+    // Đóng modal khi click ra ngoài ảnh
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+
+    // Đảm bảo nội dung tab đầu tiên được hiển thị khi tải trang
+    document.addEventListener('DOMContentLoaded', () => {
+        // Khởi tạo tab 1 cho Trang Thơ
+        const tho1 = document.getElementById('tho1');
+        if (tho1) {
+            tho1.classList.add('active', 'revealed');
+        }
+        // Khởi tạo nút Trang Thơ dưới cho trạng thái active ban đầu
+        const thoButtons = document.getElementById('thoButtonsBottom');
+        if (thoButtons && thoButtons.firstElementChild) {
+            thoButtons.firstElementChild.classList.add('active');
+        }
+
+
+        // Khởi tạo tab 1 cho Trần Phú Trong Tôi
+        const bai1 = document.getElementById('bai1');
+        if (bai1) {
+            bai1.classList.add('active', 'revealed');
+        }
+        // Khởi tạo nút Trần Phú Trong Tôi dưới cho trạng thái active ban đầu
+        const tranPhuButtons = document.getElementById('tranPhuButtonsBottom');
+        if (tranPhuButtons && tranPhuButtons.firstElementChild) {
+            tranPhuButtons.firstElementChild.classList.add('active');
+        }
+    });
+</script>
+</body>
+</html>
